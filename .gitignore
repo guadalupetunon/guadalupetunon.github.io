@@ -17,6 +17,12 @@ NOTES.md
 # Previous design, kept for reference
 oldindex.html
 
+# Full-size photo originals (1873x2078, ~800KB each). Only the web-sized
+# crop files/Tunon_photo.jpg is published — the page renders it into a
+# 180px box, so the originals were ~10x oversized and three of the four
+# were never used at all. Keep them here locally; never publish them.
+files/Tunon_photo_web*.jpg
+
 # Design experiments and comparisons
 preview-*.html
 palette-preview.html

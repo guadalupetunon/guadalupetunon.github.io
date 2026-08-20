@@ -47,7 +47,9 @@
       gap: 4.5rem;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 4rem 3.5rem 2rem;
+      /* Generous bottom padding: with the footer removed this is the only
+         thing keeping the last entry off the bottom of the window. */
+      padding: 4rem 3.5rem 6rem;
       align-items: start;
     }
 
@@ -94,7 +96,9 @@
       display: block;
       font-weight: 700;
       letter-spacing: 0.13em;
-      color: var(--text);
+      /* Amber, matching the degree labels below: institutions share a
+         colour so the panel reads as one block. */
+      color: var(--highlight-text);
     }
     .sb-bio {
       font-size: 0.94rem;
@@ -116,9 +120,9 @@
       font-weight: 600;
       letter-spacing: 0.09em;
       text-transform: uppercase;
-      /* The warm amber used by award chips, not the green accent —
-         so the degree labels read as a distinct kind of thing from
-         the role line above them. */
+      /* The warm amber used by award chips, not the green accent.
+         Shared with `.sb-role .institution` above — amber marks the
+         institutions, green the role. */
       color: var(--highlight-text);
       white-space: nowrap;
     }
@@ -162,23 +166,14 @@
       font-size: 1.6rem;
       font-weight: 500;
       letter-spacing: -0.01em;
-      margin-bottom: 0.45rem;
-    }
-    .section-title::after {
-      content: '';
-      display: block;
-      width: 52px;
-      height: 2px;
-      background: var(--accent);
-      margin-top: 0.5rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
     }
     .section-note {
       font-family: var(--serif);
       font-style: italic;
       font-size: 0.95rem;
       color: var(--muted);
-      margin: -0.85rem 0 1.5rem;
+      margin: -0.95rem 0 1.5rem;
     }
 
     #about p {
@@ -190,7 +185,7 @@
 
     /* ── Entries (book, articles, work in progress) ─── */
     .entry-list { list-style: none; }
-    .entry { padding: 0 0 1.9rem; }
+    .entry { padding: 0 0 3.2rem; }
     .entry:last-child { padding-bottom: 0; }
 
     .entry-title {
@@ -243,9 +238,31 @@
     .chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      align-items: center;   /* plain-text controls sit beside filled award pills */
+      gap: 0.9rem;
       margin-top: 0.75rem;
     }
+
+    /* Bracketed plain-text controls. The abstract toggle and article
+       links carry no fill, which leaves the award chips as the only
+       filled shapes on the page. */
+    .chip-plain {
+      font-family: var(--sans);
+      font-size: 0.84rem;
+      font-weight: 400;
+      color: var(--muted);
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      line-height: 1.3;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+    .chip-plain::before { content: '['; }
+    .chip-plain::after  { content: ']'; }
+    .chip-plain:hover { color: var(--accent); }
+    .chip-toggle.open { color: var(--accent); }
     .chip {
       font-family: var(--sans);
       font-size: 0.7rem;
@@ -269,8 +286,6 @@
       cursor: default;
     }
     .chip-award:hover { background: var(--highlight); }
-    .chip-toggle .caret { display: inline-block; transition: transform 0.25s; }
-    .chip-toggle.open .caret { transform: rotate(180deg); }
 
     .entry-abstract {
       font-size: 0.95rem;
@@ -316,7 +331,7 @@
       .layout {
         grid-template-columns: 1fr;
         gap: 2.5rem;
-        padding: 2.5rem 1.5rem 1rem;
+        padding: 2.5rem 1.5rem 4rem;
       }
       .sidebar { position: static; }
       .sb-photo { max-width: 150px; }
@@ -364,7 +379,7 @@
             <div class="entry-meta"><span class="journal">The Journal of Politics</span><span class="cite"> · Forthcoming</span></div>
             <div class="entry-coauthors">with <a href="https://www.valentinfigueroa.com/" target="_blank">Valentín Figueroa</a></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
               <span class="chip chip-award">David Brian Robertson Best Paper Award, APSA Politics and History</span>
             </div>
             <div class="entry-abstract">We estimate the effect of emancipation on the likelihood that formerly enslaved individuals were incarcerated in an urban setting—a context that lacked the economic incentives for incarceration present in plantation economies such as the U.S. South. Focusing on early nineteenth-century Buenos Aires, we reconstruct the incarceration histories of the city's residents as of 1810 by digitizing a full-count manuscript census and manually linking individuals to police records through 1830. To establish causality, we study a lottery that randomly granted certificates of freedom to a subset of enslaved persons. We find that emancipation increased the probability of incarceration by 11.8 percentage points. Evidence on mechanisms suggests that this effect was not driven by rural labor shortages but rather by the criminalization of petty offenses targeting the urban poor.</div>
@@ -375,7 +390,7 @@
             <div class="entry-meta"><span class="journal">The Journal of Politics</span><span class="cite"> · Forthcoming</span></div>
             <div class="entry-coauthors">with <a href="https://sites.harvard.edu/melanicammett/" target="_blank">Melani Cammett</a> and <a href="https://www.lucasmnovaes.com/" target="_blank">Lucas Novaes</a></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
             </div>
             <div class="entry-abstract">A growing literature examines campaign finance in developing countries and the impact of reforms to reduce the influence of economic interests in electoral politics. We argue that these reforms can increase the electoral value of other organized actors—those with access to cost-effective mobilizational resources, a local presence, and the ability to coordinate these assets—ultimately benefiting parties aligned with them. We test this argument in Brazil through an analysis of Republicanos, a major Evangelical party supported by the Universal Church of the Kingdom of God. Exploiting variation from a municipal-level reform that imposed stricter campaign spending limits, we show that the reform increased both the electoral entry and success of Republicanos. These findings highlight the political tradeoffs inherent in campaign finance reform: while reducing the sway of economic interests, such reforms may simultaneously empower other influential organizations.</div>
           </li>
@@ -384,7 +399,7 @@
             <a href="https://doi.org/10.1017/S0003055426101427" class="entry-title" target="_blank">When the Church Votes Left: How Progressive Bishops Supported the Workers' Party in Brazil</a>
             <div class="entry-meta"><span class="journal">American Political Science Review</span><span class="cite"> · 120(3): 1150–1166 · 2026</span></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
             </div>
             <div class="entry-abstract">Social scientists routinely characterize religious influence in electoral politics as conservative and left-wing parties as fundamentally secular. Against these claims, I argue that the relationship between religion and electoral politics is shaped by the redistributive beliefs and preferences of religious leaders, who can become valuable allies of left-wing parties. I evaluate this argument in Brazil following the appointment of Pope John Paul II, leveraging as-if random variation in municipalities' exposure to progressive Catholic bishops. I show that bishops who actively supported state-led redistribution were essential to the electoral success of the left-wing Workers' Party (Partido dos Trabalhadores [PT]). Voters in municipalities with longer exposure to these bishops supported the PT at higher rates. The findings highlight the under-examined role of religious leaders in shaping the electoral influence of religion and provide evidence that these leaders can, in fact, be key for the development of left-wing parties, especially in the developing world.</div>
           </li>
@@ -394,7 +409,7 @@
             <div class="entry-meta"><span class="journal">The Journal of Politics</span><span class="cite"> · 87(3) · 2025</span></div>
             <div class="entry-coauthors">with <a href="http://www.thaddunning.com/" target="_blank">Thad Dunning</a>, <a href="https://cienciassociales.edu.uy/departamento-de-ciencia-politica/felipe-monestier/" target="_blank">Felipe Monestier</a>, <a href="https://investigadores.ucu.edu.uy/en/persons/rafael-pi%C3%B1eiro-rodriguez/" target="_blank">Rafael Piñeiro</a>, and <a href="https://fernandorosenblatt.com/" target="_blank">Fernando Rosenblatt</a></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
             </div>
             <div class="entry-abstract">What is the effect of disrupting tax compliance? In a context of substantial nonpayment, the municipal government in Montevideo, Uruguay sought to reward punctual taxpayers by raffling tax holidays at random to them. Using individual payment records as an unobtrusive outcome measure, we combine natural, field, and survey experiments to study the effects. Contrary to the policy's aims, winning a tax holiday reduced tax compliance on average for two years after the interruption of payments. Our evidence suggests that the negative effect arose because the holiday disrupts the habit of paying taxes. Our findings provide broader insights into behavioral foundations of compliance while also suggesting effective policy modifications to address an abiding challenge for governments: the raising of revenue.</div>
           </li>
@@ -404,7 +419,7 @@
             <div class="entry-meta"><span class="journal">American Journal of Political Science</span><span class="cite"> · 68(3): 1106–1121 · 2024</span></div>
             <div class="entry-coauthors">with <a href="https://andy.egge.rs/" target="_blank">Andy Eggers</a> and <a href="https://www.allandafoe.com/" target="_blank">Allan Dafoe</a></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
             </div>
             <div class="entry-abstract">Placebo tests are increasingly common in applied social science research, but the methodological literature has not previously offered a comprehensive account of what we learn from them. We define placebo tests as tools for assessing the plausibility of the assumptions underlying a research design relative to some departure from those assumptions. We offer a typology of tests defined by the aspect of the research design that is altered to produce it (outcome, treatment, or population) and the type of assumption that is tested (bias assumptions or distributional assumptions). Our formal framework clarifies the extra assumptions necessary for informative placebo tests; these assumptions can be strong, and in some cases similar assumptions would justify a different procedure allowing the researcher to relax the research design's assumptions rather than test them. Properly designed and interpreted, placebo tests can be an important device for assessing the credibility of empirical research designs.</div>
           </li>
@@ -414,7 +429,7 @@
             <div class="entry-meta"><span class="journal">Journal of Public Economics</span><span class="cite"> · 235 · 2024</span></div>
             <div class="entry-coauthors">with <a href="https://vincentarmentano.com/" target="_blank">Vincent Armentano</a>, <a href="https://gps.ucsd.edu/faculty-directory/craig-mcintosh.html" target="_blank">Craig McIntosh</a>, <a href="https://cienciassociales.edu.uy/departamento-de-ciencia-politica/felipe-monestier/" target="_blank">Felipe Monestier</a>, <a href="https://investigadores.ucu.edu.uy/en/persons/rafael-pi%C3%B1eiro-rodriguez/" target="_blank">Rafael Piñeiro</a>, and <a href="https://fernandorosenblatt.com/" target="_blank">Fernando Rosenblatt</a></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
             </div>
             <div class="entry-abstract">We report on a large-scale urban resettlement program in Uruguay. Under the program, thousands of low- to middle-income households were randomly assigned over the course of seven years to ownership of apartments in new buildings in more central areas and received a subsidy averaging $44,000 per household. We match applicants to comprehensive administrative data on employment, schooling, fertility, and voting over the decade after the move. We find that the program led to a small decline in fertility for women and a two-percentage-point increase in formal employment but did not affect school attendance. The relocation program did not result in transformative improvements in the lives of its beneficiaries, likely because of its minimum income requirements and the lack of strong spatial inequality in Uruguay.</div>
           </li>
@@ -424,7 +439,7 @@
             <div class="entry-meta"><span class="journal">British Journal of Political Science</span><span class="cite"> · 54(3): 629–648 · 2024</span></div>
             <div class="entry-coauthors">with <a href="https://feierherd.github.io/" target="_blank">Germán Feierherd</a> and <a href="https://www.politics.ox.ac.uk/person/ezequiel-gonzalez-ocantos" target="_blank">Ezequiel González-Ocantos</a></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
             </div>
             <div class="entry-abstract">Courts prosecuting corruption serve a critical horizontal accountability function, but they can also play a role in moments of vertical accountability when voters can sanction corrupt candidates. This article documents the strategic use of corruption lawsuits, demonstrating the presence of an electoral cycle in filing new corruption accusations against politicians. Using an original dataset of daily corruption complaints filed in federal courts against members of Argentina's main political coalitions between 2013 and 2021, we document increased corruption accusations against and by politicians in the periods immediately preceding an election. A second dataset of daily media coverage of corruption accusations in two leading newspapers suggests that corruption is more salient before elections, offering politicians a temporal focal point to prepare and launch especially impactful lawsuits. Our findings shed new light on using courts for accountability and debates about the so-called 'lawfare' in Latin America.</div>
           </li>
@@ -434,8 +449,8 @@
             <div class="entry-meta"><span class="journal">Electoral Studies</span><span class="cite"> · 75 · 2022</span></div>
             <div class="entry-coauthors">with <a href="https://feierherd.github.io/" target="_blank">Germán Feierherd</a> and Gerson Julcarima-Alvarez</div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
-              <a class="chip" href="https://www.onpe.gob.pe/modEducacion/Publicaciones/sanciones-multas-abstencionismo.pdf" target="_blank">Report (ONPE)</a>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
+              <a class="chip-plain" href="https://www.onpe.gob.pe/modEducacion/Publicaciones/sanciones-multas-abstencionismo.pdf" target="_blank">Report (ONPE)</a>
             </div>
             <div class="entry-abstract">We study the elasticity of turnout on the size of the monetary fines that governments impose on those who fail to vote. We leverage a discontinuity in the size of monetary fines in Peru, where voters in districts above an arbitrary cutoff in poverty rates face higher fines for not voting relative to voters who reside in districts below the cutoff. Using individual-level data on millions of voters for every regional and national election between 2010 and 2016, we find that turnout increases slightly in districts with higher fines—an effect of roughly one percent. This modest effect is similar across socioeconomic groups and elections. Our results highlight a challenge that governments face in designing the sanctions in compulsory voting systems: how to increase turnout without disproportionally hurting the poor or raising turnout inequality.</div>
           </li>
@@ -445,7 +460,7 @@
             <div class="entry-meta"><span class="journal">The Journal of Politics</span><span class="cite"> · 77(1): 175–187 · 2014</span></div>
             <div class="entry-coauthors">with Marcelo Leiras and <a href="https://www.american.edu/sis/faculty/giraudy.cfm" target="_blank">Agustina Giraudy</a></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
             </div>
             <div class="entry-abstract">Political competition should protect judicial autonomy. A host of studies produce evidence that is consistent with this expectation. The influence of political competition operates through two distinct mechanisms: fragmentation and turnover. Most empirical studies treat them as mutually reinforcing. We explain why each of these effects should be most clear when the other one is inactive: when power is concentrated only the expectation of turnover may protect judicial autonomy; when turnover seems unlikely only fragmentation should prevent interferences on the judiciary. We test these hypotheses using an original data set comprising all justices that served in the 24 provincial supreme courts in Argentina between 1984 and 2008. Results of a survival model with competing risks support our argument. The effect of fragmentation is discernible when turnover seems unlikely. The expectation of turnover restrains incumbents particularly when power is concentrated.</div>
           </li>
@@ -470,7 +485,7 @@
             <span class="entry-title">Partisan Bias After Turnover: Theory and Evidence from Corruption Prosecutions</span>
             <div class="entry-coauthors">with <a href="https://feierherd.github.io/" target="_blank">Germán Feierherd</a></div>
             <div class="chips">
-              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <button class="chip-plain chip-toggle" aria-expanded="false" aria-label="Toggle abstract">abstract</button>
             </div>
             <div class="entry-abstract">Politicians often appoint allies to institutions that may investigate them. Can these appointees provide protection after turnover? Existing theories predict that such protection requires insulation from executive ex-post control. We argue instead that it persists because ex-post control binds unevenly: career incentives discipline behavior on observable margins, while partisan commitments govern opaque discretionary choices that successor governments cannot monitor or sanction. Using the random assignment of over 28,000 corruption cases in Argentina's federal criminal courts (2013–2023), we show that prosecutors shield co-partisan defendants not through formal case closures but through reduced, hard-to-observe investigative effort, driving the probability of reaching trial to effectively zero. Effects emerge only after turnover and do not extend to targeting opponents, which requires observable action. Our argument refines theories of judicial insurance: electoral uncertainty need not induce greater insulation. When consequential behavior is difficult to observe, appointments alone can provide post-turnover protection.</div>
           </li>
@@ -522,15 +537,7 @@
     </main>
   </div>
 
-  <!-- ── Footer ───────────────────────────────────────── -->
-  <footer>
-    <div class="footer-links">
-      <a href="mailto:tunon@princeton.edu">tunon [at] princeton.edu</a>
-      <a href="files/Tunon_CV.pdf">CV</a>
-      <a href="https://scholar.google.com/citations?user=vcfPp4oAAAAJ&amp;hl=en" target="_blank">Google Scholar</a>
-    </div>
-    <div class="footer-copy">© 2026 Guadalupe Tuñón. Department of Politics, Princeton University.</div>
-  </footer>
+
 
   <!-- ── JS ───────────────────────────────────────────── -->
   <script>

@@ -1,0 +1,27 @@
+# This repo is PUBLIC and publishes to https://guadalupetunon.github.io/
+# Only the built site is committed: index.html + files/
+#
+# Everything below stays local (in Dropbox) and is never pushed —
+# it contains working notes and internal comments.
+
+# Build sources
+content.toml
+build.py
+template.html
+
+# Working notes — contains candid internal commentary. Do not commit.
+NOTES.md
+
+# Previous design, kept for reference
+oldindex.html
+
+# Design experiments and comparisons
+preview-*.html
+palette-preview.html
+website-palette.html
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes

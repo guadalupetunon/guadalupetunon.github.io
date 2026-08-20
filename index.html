@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guadalupe Tuñón</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400;1,6..72,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Palette (generated from content.toml) ──────── */
+    :root {
+      --bg: #f8f7f1;
+      --surface: #eceade;
+      --text: #23261f;
+      --muted: #64695c;
+      --accent: #2f5741;
+      --accent-dark: #1f3d2d;
+      --accent-soft: #e3ebe3;
+      --accent-soft-hover: #d5e0d5;
+      --rule: #dcd9cb;
+      --highlight: #f4eddb;
+      --highlight-text: #7a5a1e;
+      --serif: 'Newsreader', Georgia, serif;
+      --sans:  'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* ── Reset ──────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Two-column layout: sticky left panel ───────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 4.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 3.5rem 2rem;
+      align-items: start;
+    }
+
+    /* Sticky, but never taller than the window — otherwise the links
+       and nav at the bottom become unreachable on short screens. */
+    .sidebar {
+      position: sticky;
+      top: 3rem;
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    /* aspect-ratio and object-position come from content.toml */
+    .sb-photo {
+      width: 100%;
+      max-width: 180px;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 1.3rem;
+    }
+    .sb-photo.gray { filter: grayscale(1) contrast(1.06); }
+    .sb-name {
+      font-family: var(--serif);
+      font-size: 1.85rem;
+      font-weight: 500;
+      line-height: 1.12;
+      letter-spacing: -0.015em;
+    }
+    /* Role and institution are distinguished on three cues at once —
+       weight, colour, and tracking — so the university doesn't read
+       as the tail end of a long job title. */
+    .sb-role {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--accent);
+      line-height: 1.65;
+      margin-top: 0.55rem;
+    }
+    .sb-role .institution {
+      display: block;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      color: var(--text);
+    }
+    .sb-bio {
+      font-size: 0.94rem;
+      line-height: 1.62;
+      color: var(--text);
+      margin-top: 1rem;
+    }
+
+    /* Background: label/value rows */
+    .sb-facts {
+      margin-top: 1.4rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.35rem 0.8rem;
+      align-items: baseline;
+    }
+    .sb-facts dt {
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      /* The warm amber used by award chips, not the green accent —
+         so the degree labels read as a distinct kind of thing from
+         the role line above them. */
+      color: var(--highlight-text);
+      white-space: nowrap;
+    }
+    .sb-facts dd { font-size: 0.88rem; line-height: 1.45; color: var(--text); }
+
+    .sb-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-top: 1.9rem;
+    }
+    .sb-links a {
+      font-size: 0.95rem;
+      color: var(--accent);
+      width: fit-content;
+    }
+    .sb-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .sb-nav {
+      list-style: none;
+      margin-top: 1.6rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--rule);
+    }
+    .sb-nav a {
+      display: block;
+      font-size: 0.94rem;
+      color: var(--muted);
+      padding: 0.16rem 0;
+      transition: color 0.2s;
+    }
+    .sb-nav a:hover { color: var(--accent); }
+    .sb-nav a.active { color: var(--accent); font-weight: 600; }
+
+    /* ── Content column ─────────────────────────────── */
+    .content { min-width: 0; max-width: 760px; }
+    section { scroll-margin-top: 2rem; margin-bottom: 3rem; }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.45rem;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 52px;
+      height: 2px;
+      background: var(--accent);
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .section-note {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin: -0.85rem 0 1.5rem;
+    }
+
+    #about p {
+      font-size: 1rem;
+      line-height: 1.78;
+      margin-bottom: 0.9rem;
+    }
+    #about a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ── Entries (book, articles, work in progress) ─── */
+    .entry-list { list-style: none; }
+    .entry { padding: 0 0 1.9rem; }
+    .entry:last-child { padding-bottom: 0; }
+
+    .entry-title {
+      font-family: var(--serif);
+      font-size: 1.14rem;
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--text);
+      display: block;
+      transition: color 0.2s;
+    }
+    a.entry-title:hover { color: var(--accent); }
+    .entry-title .note {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    /* The journal name is the thing to notice; volume, issue, pages
+       and year are reference detail and step back out of the way. */
+    .entry-meta {
+      font-family: var(--serif);
+      margin-top: 0.14rem;
+    }
+    .entry-meta .journal {
+      font-style: italic;
+      font-weight: 500;   /* 500 is the heaviest real italic loaded */
+      font-size: 1.05rem;
+      color: var(--accent);
+    }
+    .entry-meta .cite {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .entry-coauthors {
+      font-size: 0.93rem;
+      color: var(--muted);
+      margin-top: 0.12rem;
+    }
+    .entry-coauthors a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-decoration-color: var(--rule);
+      text-underline-offset: 2px;
+    }
+    .entry-coauthors a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+    /* ── Chips ──────────────────────────────────────── */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .chip {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      line-height: 1.3;
+      display: inline-block;
+    }
+    .chip:hover { background: var(--accent-soft-hover); }
+    .chip-award {
+      background: var(--highlight);
+      color: var(--highlight-text);
+      cursor: default;
+    }
+    .chip-award:hover { background: var(--highlight); }
+    .chip-toggle .caret { display: inline-block; transition: transform 0.25s; }
+    .chip-toggle.open .caret { transform: rotate(180deg); }
+
+    .entry-abstract {
+      font-size: 0.95rem;
+      line-height: 1.72;
+      color: var(--muted);
+      margin-top: 0.85rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--rule);
+      display: none;
+    }
+    .entry-abstract.open { display: block; }
+
+    /* ── Teaching ───────────────────────────────────── */
+    .course-list { list-style: none; }
+    .course-item { padding: 0 0 1.1rem; }
+    .course-name {
+      font-family: var(--serif);
+      font-size: 1.08rem;
+      font-weight: 500;
+      display: block;
+    }
+    .course-detail { font-size: 0.9rem; color: var(--muted); }
+
+    /* ── Footer ─────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--rule);
+      max-width: 1200px;
+      margin: 1rem auto 0;
+      padding: 1.6rem 3.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.92rem; color: var(--muted); }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── Responsive ─────────────────────────────────── */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 2.5rem 1.5rem 1rem;
+      }
+      .sidebar { position: static; }
+      .sb-photo { max-width: 150px; }
+      .sb-nav { display: none; }   /* sections are adjacent when stacked */
+      .content { max-width: none; }
+      footer { padding: 1.6rem 1.5rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- ── Left panel ──────────────────────────────── -->
+    <aside class="sidebar">
+      <img src="files/Tunon_photo_web4.jpg" alt="Guadalupe Tuñón" class="sb-photo" style="aspect-ratio: 1/1; object-position: center 22%; border-radius: 10px;">
+      <h1 class="sb-name">Guadalupe Tuñón</h1>
+      <div class="sb-role">Assistant Professor of Politics and Public and International Affairs<span class="institution">Princeton University</span></div>
+      <p class="sb-bio">My research asks how political and religious institutions shape electoral politics and accountability, primarily in Latin America. I employ a multi-method approach, combining archival and field research, experimental and observational data, and qualitative evidence.</p>
+      <p class="sb-bio">Before Princeton, I was an Academy Scholar at the Harvard Academy for International and Area Studies.</p>
+      <dl class="sb-facts">
+        <dt>Ph.D.</dt><dd>UC Berkeley</dd>
+        <dt>M.A.</dt><dd>Yale University</dd>
+        <dt>B.A.</dt><dd>Universidad de San Andrés</dd>
+      </dl>
+      <div class="sb-links">
+        <a href="files/Tunon_CV.pdf">CV</a>
+        <a href="https://scholar.google.com/citations?user=vcfPp4oAAAAJ&amp;hl=en" target="_blank">Google Scholar</a>
+        <a href="mailto:tunon@princeton.edu">Email</a>
+      </div>
+    </aside>
+
+    <!-- ── Content ─────────────────────────────────── -->
+    <main class="content">
+
+
+
+      <!-- ── Journal Articles ─────────────────────────────── -->
+      <section id="research">
+        <h2 class="section-title">Journal Articles</h2>
+        <ul class="entry-list">
+
+          <li class="entry">
+            <a href="https://www.journals.uchicago.edu/doi/abs/10.1086/738580" class="entry-title" target="_blank">Oppression Beyond Plantations: How Emancipation Led to Incarceration in Urban Buenos Aires, 1820–1830</a>
+            <div class="entry-meta"><span class="journal">The Journal of Politics</span><span class="cite"> · Forthcoming</span></div>
+            <div class="entry-coauthors">with Valentín Figueroa</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <span class="chip chip-award">David Brian Robertson Best Paper Award, APSA Politics and History</span>
+            </div>
+            <div class="entry-abstract">We estimate the effect of emancipation on the likelihood that formerly enslaved individuals were incarcerated in an urban setting—a context that lacked the economic incentives for incarceration present in plantation economies such as the U.S. South. Focusing on early nineteenth-century Buenos Aires, we reconstruct the incarceration histories of the city's residents as of 1810 by digitizing a full-count manuscript census and manually linking individuals to police records through 1830. To establish causality, we study a lottery that randomly granted certificates of freedom to a subset of enslaved persons. We find that emancipation increased the probability of incarceration by 11.8 percentage points. Evidence on mechanisms suggests that this effect was not driven by rural labor shortages but rather by the criminalization of petty offenses targeting the urban poor.</div>
+          </li>
+
+          <li class="entry">
+            <a href="https://www.journals.uchicago.edu/doi/10.1086/736804" class="entry-title" target="_blank">Special Interest Trade-Offs: Campaign Finance Reforms and Religious Influence in Politics in Brazil</a>
+            <div class="entry-meta"><span class="journal">The Journal of Politics</span><span class="cite"> · Forthcoming</span></div>
+            <div class="entry-coauthors">with Melani Cammett and Lucas Novaes</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+            </div>
+            <div class="entry-abstract">A growing literature examines campaign finance in developing countries and the impact of reforms to reduce the influence of economic interests in electoral politics. We argue that these reforms can increase the electoral value of other organized actors—those with access to cost-effective mobilizational resources, a local presence, and the ability to coordinate these assets—ultimately benefiting parties aligned with them. We test this argument in Brazil through an analysis of Republicanos, a major Evangelical party supported by the Universal Church of the Kingdom of God. Exploiting variation from a municipal-level reform that imposed stricter campaign spending limits, we show that the reform increased both the electoral entry and success of Republicanos. These findings highlight the political tradeoffs inherent in campaign finance reform: while reducing the sway of economic interests, such reforms may simultaneously empower other influential organizations.</div>
+          </li>
+
+          <li class="entry">
+            <a href="https://doi.org/10.1017/S0003055426101427" class="entry-title" target="_blank">When the Church Votes Left: How Progressive Bishops Supported the Workers' Party in Brazil</a>
+            <div class="entry-meta"><span class="journal">American Political Science Review</span><span class="cite"> · 120(3): 1150–1166 · 2026</span></div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+            </div>
+            <div class="entry-abstract">Social scientists routinely characterize religious influence in electoral politics as conservative and left-wing parties as fundamentally secular. Against these claims, I argue that the relationship between religion and electoral politics is shaped by the redistributive beliefs and preferences of religious leaders, who can become valuable allies of left-wing parties. I evaluate this argument in Brazil following the appointment of Pope John Paul II, leveraging as-if random variation in municipalities' exposure to progressive Catholic bishops. I show that bishops who actively supported state-led redistribution were essential to the electoral success of the left-wing Workers' Party (Partido dos Trabalhadores [PT]). Voters in municipalities with longer exposure to these bishops supported the PT at higher rates. The findings highlight the under-examined role of religious leaders in shaping the electoral influence of religion and provide evidence that these leaders can, in fact, be key for the development of left-wing parties, especially in the developing world.</div>
+          </li>
+
+          <li class="entry">
+            <a href="https://www.journals.uchicago.edu/doi/10.1086/733003" class="entry-title" target="_blank">Disrupting Compliance: The Impact of a Randomized Tax Holiday in Uruguay</a>
+            <div class="entry-meta"><span class="journal">The Journal of Politics</span><span class="cite"> · 87(3) · 2025</span></div>
+            <div class="entry-coauthors">with Thad Dunning, Felipe Monestier, Rafael Piñeiro, and Fernando Rosenblatt</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+            </div>
+            <div class="entry-abstract">What is the effect of disrupting tax compliance? In a context of substantial nonpayment, the municipal government in Montevideo, Uruguay sought to reward punctual taxpayers by raffling tax holidays at random to them. Using individual payment records as an unobtrusive outcome measure, we combine natural, field, and survey experiments to study the effects. Contrary to the policy's aims, winning a tax holiday reduced tax compliance on average for two years after the interruption of payments. Our evidence suggests that the negative effect arose because the holiday disrupts the habit of paying taxes. Our findings provide broader insights into behavioral foundations of compliance while also suggesting effective policy modifications to address an abiding challenge for governments: the raising of revenue.</div>
+          </li>
+
+          <li class="entry">
+            <a href="http://doi.org/10.1111/ajps.12818" class="entry-title" target="_blank">Placebo Tests for Causal Inference</a>
+            <div class="entry-meta"><span class="journal">American Journal of Political Science</span><span class="cite"> · 68(3): 1106–1121 · 2024</span></div>
+            <div class="entry-coauthors">with Andy Eggers and Allan Dafoe</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+            </div>
+            <div class="entry-abstract">Placebo tests are increasingly common in applied social science research, but the methodological literature has not previously offered a comprehensive account of what we learn from them. We define placebo tests as tools for assessing the plausibility of the assumptions underlying a research design relative to some departure from those assumptions. We offer a typology of tests defined by the aspect of the research design that is altered to produce it (outcome, treatment, or population) and the type of assumption that is tested (bias assumptions or distributional assumptions). Our formal framework clarifies the extra assumptions necessary for informative placebo tests; these assumptions can be strong, and in some cases similar assumptions would justify a different procedure allowing the researcher to relax the research design's assumptions rather than test them. Properly designed and interpreted, placebo tests can be an important device for assessing the credibility of empirical research designs.</div>
+          </li>
+
+          <li class="entry">
+            <a href="https://doi.org/10.1016/j.jpubeco.2024.105138" class="entry-title" target="_blank">Movin' on Up? The Impacts of a Large-Scale Home Ownership Lottery in Uruguay</a>
+            <div class="entry-meta"><span class="journal">Journal of Public Economics</span><span class="cite"> · 235 · 2024</span></div>
+            <div class="entry-coauthors">with Vincent Armentano, Craig McIntosh, Felipe Monestier, Rafael Piñeiro, and Fernando Rosenblatt</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+            </div>
+            <div class="entry-abstract">We report on a large-scale urban resettlement program in Uruguay. Under the program, thousands of low- to middle-income households were randomly assigned over the course of seven years to ownership of apartments in new buildings in more central areas and received a subsidy averaging $44,000 per household. We match applicants to comprehensive administrative data on employment, schooling, fertility, and voting over the decade after the move. We find that the program led to a small decline in fertility for women and a two-percentage-point increase in formal employment but did not affect school attendance. The relocation program did not result in transformative improvements in the lives of its beneficiaries, likely because of its minimum income requirements and the lack of strong spatial inequality in Uruguay.</div>
+          </li>
+
+          <li class="entry">
+            <a href="https://doi.org/10.1017/S000712342300042X" class="entry-title" target="_blank">Witch Hunts? Electoral Cycles and Corruption Lawsuits in Argentina</a>
+            <div class="entry-meta"><span class="journal">British Journal of Political Science</span><span class="cite"> · 54(3): 629–648 · 2024</span></div>
+            <div class="entry-coauthors">with Germán Feierherd and Ezequiel González-Ocantos</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+            </div>
+            <div class="entry-abstract">Courts prosecuting corruption serve a critical horizontal accountability function, but they can also play a role in moments of vertical accountability when voters can sanction corrupt candidates. This article documents the strategic use of corruption lawsuits, demonstrating the presence of an electoral cycle in filing new corruption accusations against politicians. Using an original dataset of daily corruption complaints filed in federal courts against members of Argentina's main political coalitions between 2013 and 2021, we document increased corruption accusations against and by politicians in the periods immediately preceding an election. A second dataset of daily media coverage of corruption accusations in two leading newspapers suggests that corruption is more salient before elections, offering politicians a temporal focal point to prepare and launch especially impactful lawsuits. Our findings shed new light on using courts for accountability and debates about the so-called 'lawfare' in Latin America.</div>
+          </li>
+
+          <li class="entry">
+            <a href="https://doi.org/10.1016/j.electstud.2021.102418" class="entry-title" target="_blank">Does the Monetary Cost of Abstaining Increase Turnout? Causal Evidence from Peru</a>
+            <div class="entry-meta"><span class="journal">Electoral Studies</span><span class="cite"> · 75 · 2022</span></div>
+            <div class="entry-coauthors">with Germán Feierherd and Gerson Julcarima-Alvarez</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+              <a class="chip" href="https://www.onpe.gob.pe/modEducacion/Publicaciones/sanciones-multas-abstencionismo.pdf" target="_blank">Report (ONPE)</a>
+            </div>
+            <div class="entry-abstract">We study the elasticity of turnout on the size of the monetary fines that governments impose on those who fail to vote. We leverage a discontinuity in the size of monetary fines in Peru, where voters in districts above an arbitrary cutoff in poverty rates face higher fines for not voting relative to voters who reside in districts below the cutoff. Using individual-level data on millions of voters for every regional and national election between 2010 and 2016, we find that turnout increases slightly in districts with higher fines—an effect of roughly one percent. This modest effect is similar across socioeconomic groups and elections. Our results highlight a challenge that governments face in designing the sanctions in compulsory voting systems: how to increase turnout without disproportionally hurting the poor or raising turnout inequality.</div>
+          </li>
+
+          <li class="entry">
+            <a href="https://www.dropbox.com/s/e9xmw91kz0w8qa2/LTG_WWIC.pdf?dl=0" class="entry-title" target="_blank">Who Wants an Independent Court? Political Competition and Supreme Court Instability in the Argentine Provinces (1984–2008)</a>
+            <div class="entry-meta"><span class="journal">The Journal of Politics</span><span class="cite"> · 77(1): 175–187 · 2014</span></div>
+            <div class="entry-coauthors">with Marcelo Leiras and Agustina Giraudy</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+            </div>
+            <div class="entry-abstract">Political competition should protect judicial autonomy. A host of studies produce evidence that is consistent with this expectation. The influence of political competition operates through two distinct mechanisms: fragmentation and turnover. Most empirical studies treat them as mutually reinforcing. We explain why each of these effects should be most clear when the other one is inactive: when power is concentrated only the expectation of turnover may protect judicial autonomy; when turnover seems unlikely only fragmentation should prevent interferences on the judiciary. We test these hypotheses using an original data set comprising all justices that served in the 24 provincial supreme courts in Argentina between 1984 and 2008. Results of a survival model with competing risks support our argument. The effect of fragmentation is discernible when turnover seems unlikely. The expectation of turnover restrains incumbents particularly when power is concentrated.</div>
+          </li>
+
+        </ul>
+      </section>
+
+      <!-- ── Work in Progress ─────────────────────────────── -->
+      <section id="wip">
+        <h2 class="section-title">Work in Progress</h2>
+        <ul class="entry-list">
+
+          <li class="entry">
+            <span class="entry-title">When the Church Votes Left <span class="note">(book manuscript)</span></span>
+            <div class="chips">
+              <span class="chip chip-award">Mancur Olson Prize for Best Dissertation, APSA Political Economy</span>
+              <span class="chip chip-award">Aaron Wildavsky Award for Best Dissertation, APSA Religion and Politics</span>
+            </div>
+          </li>
+
+          <li class="entry">
+            <span class="entry-title">The Autocracy Bandwagon: Electoral Institutions and Elite Selection in Authoritarian Regimes</span>
+            <div class="entry-coauthors">with Lucas Novaes</div>
+          </li>
+
+          <li class="entry">
+            <span class="entry-title">Partisan Bias After Turnover: Theory and Evidence from Corruption Prosecutions</span>
+            <div class="entry-coauthors">with Germán Feierherd</div>
+            <div class="chips">
+              <button class="chip chip-toggle" aria-expanded="false" aria-label="Toggle abstract">Abstract <span class="caret">▾</span></button>
+            </div>
+            <div class="entry-abstract">Politicians often appoint allies to institutions that may investigate them. Can these appointees provide protection after turnover? Existing theories predict that such protection requires insulation from executive ex-post control. We argue instead that it persists because ex-post control binds unevenly: career incentives discipline behavior on observable margins, while partisan commitments govern opaque discretionary choices that successor governments cannot monitor or sanction. Using the random assignment of over 28,000 corruption cases in Argentina's federal criminal courts (2013–2023), we show that prosecutors shield co-partisan defendants not through formal case closures but through reduced, hard-to-observe investigative effort, driving the probability of reaching trial to effectively zero. Effects emerge only after turnover and do not extend to targeting opponents, which requires observable action. Our argument refines theories of judicial insurance: electoral uncertainty need not induce greater insulation. When consequential behavior is difficult to observe, appointments alone can provide post-turnover protection.</div>
+          </li>
+
+          <li class="entry">
+            <span class="entry-title">The Catholic Church and Redistributive Conflict: The Effects of John Paul II's Rollback of Progressivism in Brazil</span>
+            <div class="entry-coauthors">with Mónica Martinez-Bravo and Daniela Solá</div>
+          </li>
+
+          <li class="entry">
+            <span class="entry-title">Religious Cooptation and Authoritarian Persistence: The Spanish Catholic Church and Democratization after Franco</span>
+            <div class="entry-coauthors">with Miguel Alquézar Yus and Viivi Järvi</div>
+          </li>
+
+        </ul>
+      </section>
+
+      <!-- ── Teaching ──────────────────────────────── -->
+      <section id="teaching">
+        <h2 class="section-title">Teaching</h2>
+        <p class="section-note">Syllabi available upon request</p>
+        <ul class="course-list">
+
+          <li class="course-item">
+            <span class="course-name">The Political Economy of Latin America</span>
+            <span class="course-detail">Undergraduate · Princeton · Spring 2024</span>
+          </li>
+          <li class="course-item">
+            <span class="course-name">The Politics of Public Policy</span>
+            <span class="course-detail">Graduate (MPA) · Princeton · Fall 2020, 2021, 2023, 2024, 2025</span>
+          </li>
+          <li class="course-item">
+            <span class="course-name">Design-Based Inference: Natural and Randomized Experiments</span>
+            <span class="course-detail">Graduate · IQMR Module · Summer 2024</span>
+          </li>
+          <li class="course-item">
+            <span class="course-name">Political Science Math Camp</span>
+            <span class="course-detail">Graduate · UC Berkeley · Fall 2016, 2017</span>
+          </li>
+
+        </ul>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── Footer ───────────────────────────────────────── -->
+  <footer>
+    <div class="footer-links">
+      <a href="mailto:tunon@princeton.edu">tunon [at] princeton.edu</a>
+      <a href="files/Tunon_CV.pdf">CV</a>
+      <a href="https://scholar.google.com/citations?user=vcfPp4oAAAAJ&amp;hl=en" target="_blank">Google Scholar</a>
+    </div>
+    <div class="footer-copy">© 2026 Guadalupe Tuñón. Department of Politics, Princeton University.</div>
+  </footer>
+
+  <!-- ── JS ───────────────────────────────────────────── -->
+  <script>
+    // Highlight the sidebar link for the section in view
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.sb-nav a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { threshold: 0.25 });
+    sections.forEach(s => observer.observe(s));
+
+    // Expandable abstracts
+    document.querySelectorAll('.chip-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const abstract = btn.closest('.entry').querySelector('.entry-abstract');
+        if (!abstract) return;
+        const isOpen = abstract.classList.toggle('open');
+        btn.classList.toggle('open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -33,3 +33,6 @@ website-palette.html
 ._*
 .Spotlight-V100
 .Trashes
+
+# One-off history-rewrite filter, kept for reference (see NOTES.md)
+scrub-history.sh

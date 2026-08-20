@@ -36,3 +36,7 @@ website-palette.html
 
 # One-off history-rewrite filter, kept for reference (see NOTES.md)
 scrub-history.sh
+
+# Publication safety checks (see NOTES.md)
+check_public.py
+verify_live.py

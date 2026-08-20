@@ -4,10 +4,12 @@
 # Everything below stays local (in Dropbox) and is never pushed —
 # it contains working notes and internal comments.
 
-# Build sources
+# Build sources and tooling
 content.toml
 build.py
+build_cv.py
 template.html
+update.sh
 
 # Working notes — contains candid internal commentary. Do not commit.
 NOTES.md
